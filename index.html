@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gram to Rupees Calculator</title>
+
+  <!-- प्राथमिक मेटा टैग्स (Primary SEO Meta Tags) -->
+  <meta name="title" content="ग्राम ↔ रुपये कैलकुलेटर | Gram to Rupees Calculator">
+  <meta name="description"
+    content="प्रति किलो रेट के आधार पर ग्राम से रुपये और रुपये से ग्राम की तुरंत और सटीक गणना करें। बाज़ार, दुकान और किराना हिसाब-किताब के लिए सबसे आसान टूल।">
+  <meta name="keywords"
+    content="gram to rupees calculator, rupees to gram calculator, gram to inr, kirana calculator, market weight price calculator, gram bhav calculator, ग्राम से रुपये, रुपये से ग्राम, किराना कैलकुलेटर">
+  <meta name="author" content="Sudheer">
+  <meta name="robots" content="index, follow">
+
+  <!-- मोबाइल और ऐप सेटिंग्स (PWA & Mobile Meta) -->
+  <meta name="theme-color" content="#1a4731">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="GramCalc">
+  <meta name="application-name" content="Gram Rupees Calculator">
+
+  <!-- ओपन ग्राफ / सोशल मीडिया मेटा (Open Graph / WhatsApp / Facebook) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ग्राम ↔ रुपये कैलकुलेटर | Gram ↔ Rupees Calculator">
+  <meta property="og:description" content="रेट के हिसाब से ग्राम और रुपये तुरंत निकालें। तेज़, सटीक और आसान।">
+  <meta property="og:locale" content="hi_IN">
+
+  <!-- ट्विटर कार्ड्स (Twitter Meta) -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ग्राम ↔ रुपये कैलकुलेटर">
+  <meta name="twitter:description" content="रेट के हिसाब से ग्राम और रुपये तुरंत निकालें।">
+  <style>
+    /* --- नीट एंड क्लीन, क्लासिक यूटिलिटी स्टाइल --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #f1f4f6;
+      color: #1f2937;
+      line-height: 1.5;
+      padding: 16px 12px 32px;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* हेडर */
+    .header {
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    /* मुख्य ग्रिड (दोनों कैलकुलेटर कार्ड) */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title span.badge {
+      font-size: 11px;
+      font-weight: 600;
+      background-color: #e2e8f0;
+      color: #334155;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* फॉर्म फील्ड्स */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 5px;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #9ca3af;
+      border-radius: 6px;
+      background-color: #ffffff;
+      overflow: hidden;
+    }
+
+    .input-container:focus-within {
+      border-color: #1e3a8a;
+      box-shadow: 0 0 0 2px #93c5fd;
+    }
+
+    .input-container input {
+      width: 100%;
+      border: none;
+      outline: none;
+      padding: 10px 12px;
+      font-size: 17px;
+      font-weight: 600;
+      color: #111827;
+      background: transparent;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .input-container .unit-label {
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #4b5563;
+      background-color: #f3f4f6;
+      border-left: 1px solid #d1d5db;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      border-radius: 0 5px 5px 0;
+    }
+
+    /* क्विक बटन (क्लासिक और साफ) */
+    .quick-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .quick-btn {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+    }
+
+    .quick-btn:hover {
+      background-color: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* रिज़ल्ट बॉक्स */
+    .result-box {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 5px;
+      padding: 14px;
+      margin-top: 10px;
+      margin-bottom: 14px;
+    }
+
+    .result-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #166534;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .result-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: #14532d;
+      margin: 4px 0;
+      word-break: break-all;
+    }
+
+    .result-sub {
+      font-size: 13px;
+      font-weight: 600;
+      color: #15803d;
+    }
+
+    .result-formula {
+      font-size: 11px;
+      color: #65a30d;
+      margin-top: 6px;
+      border-top: 1px dashed #bbf7d0;
+      padding-top: 5px;
+    }
+
+    /* एक्शन बटन */
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn {
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background-color: #1e3a8a;
+      color: #ffffff;
+      border-color: #1e3a8a;
+      flex: 1;
+    }
+
+    .btn-primary:hover {
+      background-color: #172554;
+    }
+
+    .btn-secondary {
+      background-color: #ffffff;
+      color: #374151;
+      border-color: #d1d5db;
+    }
+
+    .btn-secondary:hover {
+      background-color: #f3f4f6;
+    }
+
+    /* हिसाब हिस्ट्री / Recent Records सेक्शन */
+    .history-section {
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+
+    .history-header h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .history-clear-btn {
+      background: none;
+      border: none;
+      color: #dc2626;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .history-table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 4px;
+    }
+
+    .history-table {
+      width: 100%;
+      min-width: 420px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .history-table th {
+      text-align: left;
+      background-color: #f9fafb;
+      color: #4b5563;
+      padding: 8px 10px;
+      border: 1px solid #e5e7eb;
+      font-weight: 600;
+    }
+
+    .history-table td {
+      padding: 8px 10px;
+      border: 1px solid #e5e7eb;
+      color: #1f2937;
+    }
+
+    .history-empty {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      padding: 16px 0;
+    }
+
+    /* नोट व फ़ुटर */
+    .info-note {
+      background-color: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-left: 4px solid #f59e0b;
+      color: #92400e;
+      padding: 10px 14px;
+      font-size: 12px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    /* मोबाइल रिस्पॉन्सिव */
+    @media (max-width: 640px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      .header {
+        padding: 14px;
+      }
+
+      .result-value {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- हेडर -->
+    <header class="header">
+      <h1>ग्राम ↔ रुपये कैलकुलेटर</h1>
+      <p>प्रति किलो रेट के आधार पर सही वजन और कीमत निकालें</p>
+    </header>
+
+    <!-- दोनों कैलकुलेटर कार्ड -->
+    <div class="calc-grid">
+
+      <!-- कार्ड 1: ग्राम से रुपये -->
+      <div class="card">
+        <div class="card-title">
+          <span>1. ग्राम से रुपये</span>
+          <span class="badge">वजन → कीमत</span>
+        </div>
+
+        <div class="form-group">
+          <label for="grams">वजन (Weight):</label>
+          <div class="input-container">
+            <input id="grams" type="number" min="0" step="any" inputmode="decimal" placeholder="0" autofocus>
+            <span class="unit-label">ग्राम</span>
+          </div>
+          <div class="quick-buttons">
+            <button type="button" class="quick-btn" onclick="setFieldValue('grams', 100)">100g</button>
+            <button type="button" class="quick-btn" onclick="setFieldValue('grams', 250)">250g (पाव)</button>
+            <button type="button" class="quick-btn" onclick="setFieldValue('grams', 500)">500g (आधा किलो)</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rate1">रेट (प्रति 1 किलो):</label>
+          <div class="input-container">
+            <input id="rate1" type="number" min="0" step="any" inputmode="decimal" placeholder="0">
+            <span class="unit-label">₹ / किलो</span>
+          </div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-label">कुल देय रकम:</div>
+          <div class="result-value" id="moneyResult">₹0.00</div>
+          <div class="result-formula">गणना: वजन (ग्राम) × रेट ÷ 1000</div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" onclick="copyResult('moneyResult', event)">रिजल्ट कॉपी
+            करें</button>
+          <button type="button" class="btn btn-secondary" onclick="saveToHistory('g2r')">हिसाब जोड़ें</button>
+          <button type="button" class="btn btn-secondary" onclick="clearInputs(['grams', 'rate1'])">साफ करें</button>
+        </div>
+      </div>
+
+      <!-- कार्ड 2: रुपये से ग्राम -->
+      <div class="card">
+        <div class="card-title">
+          <span>2. रुपये से ग्राम</span>
+          <span class="badge">रुपये → वजन</span>
+        </div>
+
+        <div class="form-group">
+          <label for="rupees">रकम (Amount):</label>
+          <div class="input-container">
+            <input id="rupees" type="number" min="0" step="any" inputmode="decimal" placeholder="0">
+            <span class="unit-label">रुपये (₹)</span>
+          </div>
+          <div class="quick-buttons">
+            <button type="button" class="quick-btn" onclick="setFieldValue('rupees', 10)">₹10</button>
+            <button type="button" class="quick-btn" onclick="setFieldValue('rupees', 20)">₹20</button>
+            <button type="button" class="quick-btn" onclick="setFieldValue('rupees', 50)">₹50</button>
+            <button type="button" class="quick-btn" onclick="setFieldValue('rupees', 100)">₹100</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rate2">रेट (प्रति 1 किलो):</label>
+          <div class="input-container">
+            <input id="rate2" type="number" min="0" step="any" inputmode="decimal" placeholder="0">
+            <span class="unit-label">₹ / किलो</span>
+          </div>
+        </div>
+
+        <div class="result-box">
+          <div class="result-label">मिलने वाला वजन:</div>
+          <div class="result-value" id="gramResult">0 ग्राम</div>
+          <div class="result-sub" id="kgBreakdown"></div>
+          <div class="result-formula">गणना: रुपये ÷ रेट × 1000</div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-primary" onclick="copyResult('gramResult', event)">रिजल्ट कॉपी
+            करें</button>
+          <button type="button" class="btn btn-secondary" onclick="saveToHistory('r2g')">हिसाब जोड़ें</button>
+          <button type="button" class="btn btn-secondary" onclick="clearInputs(['rupees', 'rate2'])">साफ करें</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- नोट -->
+    <div class="info-note">
+      <strong>नियम:</strong> रेट हमेशा 1 किलो (1000 ग्राम) का भरें। गणना तुरंत और पूरी तरह सटीक होगी।
+    </div>
+
+    <!-- हालिया हिसाब तालिका (Recent History) -->
+    <div class="history-section">
+      <div class="history-header">
+        <h2>हालिया हिसाब (Recent History)</h2>
+        <div style="display:flex; gap:12px;">
+          <button type="button" class="history-clear-btn" style="color:#1e3a8a;" onclick="shareHistory()">हिसाब कॉपी
+            करें</button>
+          <button type="button" class="history-clear-btn" onclick="clearHistory()">सूची खाली करें</button>
+        </div>
+      </div>
+      <div id="historyTableContainer" class="history-table-container">
+        <div class="history-empty">अभी तक कोई हिसाब नहीं जोड़ा गया है। "हिसाब जोड़ें" बटन दबाकर यहाँ सुरक्षित करें।
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      साफ-सुथरा और सटीक • बिना इंटरनेट भी काम करता है
+    </footer>
+  </div>
+
+  <script>
+    // एलिमेंट सेलेक्टर
+    const $ = id => document.getElementById(id);
+
+    // संख्या वैलिडेशन
+    function getPositiveNumber(id) {
+      const val = parseFloat($(id).value);
+      return (Number.isFinite(val) && val >= 0) ? val : null;
+    }
+
+    // मुद्रा फ़ॉर्मेटिंग (₹ Indian Locale)
+    function formatMoney(amount) {
+      return '₹' + amount.toLocaleString('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    // वजन फ़ॉर्मेटिंग (पूरा नंबर हो तो दशमलव न दिखाएं, अन्यथा 2 स्थान तक)
+    function formatWeight(grams) {
+      return grams.toLocaleString('en-IN', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      }) + ' ग्राम';
+    }
+
+    // मुख्य गणना फ़ंक्शन
+    function calculate() {
+      // 1. ग्राम से रुपये
+      const grams = getPositiveNumber('grams');
+      const rate1 = getPositiveNumber('rate1');
+      if (grams !== null && rate1 > 0) {
+        const cost = (grams * rate1) / 1000;
+        $('moneyResult').textContent = formatMoney(cost);
+      } else {
+        $('moneyResult').textContent = '₹0.00';
+      }
+
+      // 2. रुपये से ग्राम
+      const rupees = getPositiveNumber('rupees');
+      const rate2 = getPositiveNumber('rate2');
+      if (rupees !== null && rate2 > 0) {
+        const totalGrams = (rupees / rate2) * 1000;
+        $('gramResult').textContent = formatWeight(totalGrams);
+
+        // यदि 1000 ग्राम या अधिक हो तो किलो में भी स्पष्ट दिखाएं
+        if (totalGrams >= 1000) {
+          const kg = Math.floor(totalGrams / 1000);
+          const rem = totalGrams % 1000;
+          const remText = rem > 0 ? ` ${rem.toLocaleString('en-IN', { maximumFractionDigits: 1 })} ग्राम` : '';
+          $('kgBreakdown').textContent = `(= ${kg} किलो${remText} / ${(totalGrams / 1000).toFixed(2)} kg)`;
+        } else {
+          $('kgBreakdown').textContent = '';
+        }
+      } else {
+        $('gramResult').textContent = '0 ग्राम';
+        $('kgBreakdown').textContent = '';
+      }
+    }
+
+    // क्विक बटन से इनपुट सेट करना
+    function setFieldValue(fieldId, value) {
+      $(fieldId).value = value;
+      calculate();
+      $(fieldId).focus();
+    }
+
+    // इनपुट रीसेट
+    function clearInputs(fieldIds) {
+      fieldIds.forEach(id => {
+        $(id).value = '';
+      });
+      calculate();
+    }
+
+    // सुरक्षित क्लिपबोर्ड कॉपी (मॉडर्न API + ऑफलाइन / file:// फॉलबैक)
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (e) { }
+      }
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(ta);
+        return successful;
+      } catch (err) {
+        return false;
+      }
+    }
+
+    // क्लिपबोर्ड में कॉपी करना (इवेंट सपोर्ट व फॉलबैक के साथ)
+    async function copyResult(elementId, evt) {
+      const text = $(elementId).textContent;
+      const button = evt ? evt.currentTarget : null;
+      const ok = await copyToClipboard(text);
+      if (ok && button) {
+        const originalText = button.textContent;
+        button.textContent = 'कॉपी हो गया ✓';
+        button.style.backgroundColor = '#15803d';
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.backgroundColor = '';
+        }, 1200);
+      } else if (!ok) {
+        alert('कॉपी नहीं हो पाया: ' + text);
+      }
+    }
+
+    // --- हालिया हिसाब (History Management with LocalStorage & Total) ---
+    let calculationHistory = [];
+    try {
+      const saved = localStorage.getItem('calc_history');
+      if (saved) calculationHistory = JSON.parse(saved);
+    } catch (e) { }
+
+    function saveToHistory(type) {
+      let record = null;
+
+      if (type === 'g2r') {
+        const grams = getPositiveNumber('grams');
+        const rate1 = getPositiveNumber('rate1');
+        if (grams === null || !rate1) {
+          alert('कृपया पहले वजन और रेट दर्ज करें!');
+          return;
+        }
+        const cost = (grams * rate1) / 1000;
+        record = {
+          type: 'ग्राम → रुपये',
+          details: `${formatWeight(grams)} @ ₹${rate1}/kg`,
+          rawCost: cost,
+          result: formatMoney(cost),
+          time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+        };
+      } else if (type === 'r2g') {
+        const rupees = getPositiveNumber('rupees');
+        const rate2 = getPositiveNumber('rate2');
+        if (rupees === null || !rate2) {
+          alert('कृपया पहले रकम और रेट दर्ज करें!');
+          return;
+        }
+        const grams = (rupees / rate2) * 1000;
+        record = {
+          type: 'रुपये → ग्राम',
+          details: `₹${rupees} @ ₹${rate2}/kg`,
+          rawCost: null,
+          result: formatWeight(grams),
+          time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+        };
+      }
+
+      if (record) {
+        calculationHistory.unshift(record);
+        if (calculationHistory.length > 20) calculationHistory.pop(); // अधिकतम 20 रिकॉर्ड
+        persistHistory();
+        renderHistory();
+      }
+    }
+
+    function persistHistory() {
+      try {
+        localStorage.setItem('calc_history', JSON.stringify(calculationHistory));
+      } catch (e) { }
+    }
+
+    function renderHistory() {
+      const container = $('historyTableContainer');
+      if (calculationHistory.length === 0) {
+        container.innerHTML = '<div class="history-empty">अभी तक कोई हिसाब नहीं जोड़ा गया है। "हिसाब जोड़ें" बटन दबाकर यहाँ सुरक्षित करें।</div>';
+        return;
+      }
+
+      let totalMoney = 0;
+      let hasMoneyRecords = false;
+
+      let html = `
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>समय</th>
+          <th>प्रकार</th>
+          <th>इनपुट (मात्रा @ रेट)</th>
+          <th>परिणाम</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+      calculationHistory.forEach(item => {
+        if (typeof item.rawCost === 'number') {
+          totalMoney += item.rawCost;
+          hasMoneyRecords = true;
+        }
+        html += `
+      <tr>
+        <td>${item.time}</td>
+        <td><strong>${item.type}</strong></td>
+        <td>${item.details}</td>
+        <td style="color:#166534; font-weight:700;">${item.result}</td>
+      </tr>
+    `;
+      });
+
+      if (hasMoneyRecords) {
+        html += `
+      <tr style="background-color: #f0fdf4; font-weight: bold; border-top: 2px solid #86efac;">
+        <td colspan="3" style="text-align: right; color:#14532d;">ग्राम → रुपये का कुल योग (Total):</td>
+        <td style="color:#14532d; font-size:15px;">${formatMoney(totalMoney)}</td>
+      </tr>
+    `;
+      }
+
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+
+    function clearHistory() {
+      if (calculationHistory.length === 0) return;
+      if (confirm('क्या आप सच में पूरी हालिया सूची खाली करना चाहते हैं?')) {
+        calculationHistory = [];
+        persistHistory();
+        renderHistory();
+      }
+    }
+
+    async function shareHistory() {
+      if (calculationHistory.length === 0) {
+        alert('कॉपी करने के लिए कोई हिसाब मौजूद नहीं है!');
+        return;
+      }
+      let text = '📋 *ग्राम ↔ रुपये हिसाब*\n-------------------------\n';
+      let total = 0;
+      calculationHistory.forEach((item, idx) => {
+        text += `${idx + 1}. ${item.type}: ${item.details} = ${item.result}\n`;
+        if (typeof item.rawCost === 'number') total += item.rawCost;
+      });
+      if (total > 0) {
+        text += `-------------------------\n*कुल रकम:* ₹${total.toFixed(2)}\n`;
+      }
+      const ok = await copyToClipboard(text);
+      if (ok) {
+        alert('पूरा हिसाब क्लिपबोर्ड में कॉपी हो गया!\nअब आप इसे WhatsApp या SMS में पेस्ट कर सकते हैं।');
+      } else {
+        alert('कॉपी नहीं हो पाया!');
+      }
+    }
+
+    // इनपुट इवेंट लिसनर्स (रियल-टाइम गणना)
+    ['grams', 'rate1', 'rupees', 'rate2'].forEach(id => {
+      $(id).addEventListener('input', calculate);
+    });
+
+    // Enter Key नेविगेशन (तेज़ डेटा एंट्री के लिए)
+    $('grams').addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        $('rate1').focus();
+        $('rate1').select();
+      }
+    });
+    $('rate1').addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        saveToHistory('g2r');
+      }
+    });
+    $('rupees').addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        $('rate2').focus();
+        $('rate2').select();
+      }
+    });
+    $('rate2').addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        saveToHistory('r2g');
+      }
+    });
+
+    // पहली बार लोड होने पर गणना और हिस्ट्री रेंडर
+    calculate();
+    renderHistory();
+  </script>
+
+</body>
+
+</html>
